@@ -2,6 +2,8 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.ChatApp" parent="Theme.Material3.DayNight">
         <!-- Customize your dark theme here. -->
+
+        <item name="colorPrimary" >@color/black</item>
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
 </resources>

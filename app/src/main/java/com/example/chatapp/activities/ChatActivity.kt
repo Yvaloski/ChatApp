@@ -1,11 +1,11 @@
 package com.example.chatapp.activities
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
-
 import android.widget.EditText
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.R
@@ -23,12 +23,15 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         fabSendMessage = findViewById(R.id.fabSendMessage)
         editMessage = findViewById(R.id.editMessage)
         rvChatList = findViewById(R.id.rvChatList)
-        val name= intent.getStringExtra("friend")
-        supportActionBar?.title= name?:"ChatApp"
+        val name = intent.getStringExtra("friend")
+        supportActionBar?.title = name ?: "ChatApp"
         chatRecyclerAdapter = ChatRecyclerAdapter()
+
+
 
 
         val messages = mutableListOf<Message>(
@@ -89,8 +92,9 @@ class ChatActivity : AppCompatActivity() {
                 editMessage.setText("")
 
                 //hide keyboard
-                val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE)as InputMethodManager
-                inputMethodManager.hideSoftInputFromWindow(editMessage.windowToken,0)
+                val inputMethodManager =
+                    getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(editMessage.windowToken, 0)
             }
         }
 
@@ -101,5 +105,7 @@ class ChatActivity : AppCompatActivity() {
         }
         chatRecyclerAdapter.items = messages
 
-    }
+
+        }
+
 }

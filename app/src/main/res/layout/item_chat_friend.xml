@@ -17,11 +17,13 @@
         android:layout_height="wrap_content"
         android:text="HEllo Loski "
         android:textSize="16dp"
+        android:textColor="@color/black"
         tools:layout_editor_absoluteX="25dp"
         tools:layout_editor_absoluteY="44dp" />
 
     <TextView
         android:id="@+id/tvHour"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="12:12"
