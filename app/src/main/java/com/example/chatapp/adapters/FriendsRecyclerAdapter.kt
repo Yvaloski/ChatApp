@@ -43,9 +43,9 @@ class FriendsRecyclerAdapter : RecyclerView.Adapter<FriendsRecyclerAdapter.ViewH
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val ivFriend: ShapeableImageView = itemView.findViewById(R.id.ivFriend)
-        private val tvName : TextView = itemView.findViewById(R.id.tvName)
-        private val tvLastMsg : TextView = itemView.findViewById(R.id.tvLastMsg)
-        private val tvHour : TextView = itemView.findViewById(R.id.tvHour)
+        val tvName: TextView = itemView.findViewById(R.id.tvName)
+        val tvLastMsg: TextView = itemView.findViewById(R.id.tvLastMsg)
+        val tvHour: TextView = itemView.findViewById(R.id.tvHour)
 
 
         fun bind(friend: Friend) {
@@ -54,9 +54,11 @@ class FriendsRecyclerAdapter : RecyclerView.Adapter<FriendsRecyclerAdapter.ViewH
             val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
             tvHour.text = sdf.format(Date(friend.timestamp))
 
-            itemView.setOnClickListener{
+            itemView.setOnClickListener {
 
                 Intent(itemView.context, ChatActivity::class.java).also {
+
+                    it.putExtra("friend", friend.name)
                     itemView.context.startActivity(it)
                 }
             }

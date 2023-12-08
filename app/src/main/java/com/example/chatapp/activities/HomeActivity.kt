@@ -32,7 +32,6 @@ class HomeActivity : AppCompatActivity() {
         }
         val friends = mutableListOf<Friend>(
 
-            Friend("Yval","Salut ma caille"," ",420),
             Friend("Tony","WEWE ma caille"," ",420),
             Friend("Pedro salini","Salut ma caille"," ",420),
             Friend("Octo Hocho","Salut ma caille"," ",420)

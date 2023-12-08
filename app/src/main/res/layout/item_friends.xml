@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="65dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginVertical="1dp"
+    android:background="@color/black"
+    android:backgroundTint="@color/black"
     app:cardElevation="2dp">
 
     <RelativeLayout
@@ -12,13 +14,14 @@
         android:paddingHorizontal="8dp"
         android:paddingVertical="8dp"
         >
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivFriend"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:scaleType="centerCrop"
             android:layout_centerVertical="true"
-            android:src="@drawable/baseline_bug_report_24"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/baseline_bug_report_24" />
 
         <TextView
             android:id="@+id/tvName"
@@ -48,6 +51,7 @@
             android:textColor="#6BF013"
             android:textSize="14dp"
             android:textStyle="italic" />
+
         <TextView
             android:id="@+id/tvHour"
             android:layout_width="wrap_content"
