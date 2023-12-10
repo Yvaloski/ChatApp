@@ -1,5 +1,6 @@
 package com.example.chatapp.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.R
+import com.example.chatapp.activities.ChatActivity
 import com.example.chatapp.models.User
 
 class UserRecyclerAdapter : RecyclerView.Adapter<UserRecyclerAdapter.ViewHolder>(), Filterable {
@@ -31,7 +33,7 @@ class UserRecyclerAdapter : RecyclerView.Adapter<UserRecyclerAdapter.ViewHolder>
 
                     userFilteredList = items
                 }else{
-                    val resultList = items.filter { it.fullName.lowercase().contains(charSearch) }
+                    val resultList = items.filter { it.pseudo.lowercase().contains(charSearch) }
                     userFilteredList = resultList as MutableList<User>
                 }
 
@@ -78,9 +80,16 @@ class UserRecyclerAdapter : RecyclerView.Adapter<UserRecyclerAdapter.ViewHolder>
 
         fun bind(user: User) {
 
-            tvShortName.text = user.fullName[0].toString()
-            tvNames.text = user.fullName
+            tvShortName.text = user.pseudo[0].toString()
+            tvNames.text = user.pseudo
 
+            itemView.setOnClickListener{
+
+                Intent(itemView.context,ChatActivity::class.java).also {
+                    it.putExtra("friend",user.uuid)
+                    itemView.context.startActivity(it)
+                }
+            }
         }
 
 

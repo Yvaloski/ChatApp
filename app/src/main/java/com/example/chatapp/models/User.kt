@@ -1,7 +1,12 @@
 package com.example.chatapp.models
 
 data class User(
-    val  email:String,
-    val fullName:String,
-    val image: String
+
+    var uuid: String,
+    val email: String,
+    var pseudo: String,
+    var image: String?
 )
+{
+    constructor():this("","","","")
+}

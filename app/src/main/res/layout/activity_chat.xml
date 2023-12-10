@@ -7,13 +7,7 @@
     android:background="@color/black"
     tools:context=".activities.ChatActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvChatList"
-        android:layout_width="410dp"
-        android:layout_height="595dp"
-        android:layout_marginBottom="32dp"
-        tools:itemCount="6"
-        tools:listitem="@layout/item_chat_sender" />
+
 
     <RelativeLayout
         android:id="@+id/layoutChat"
@@ -48,4 +42,12 @@
             app:backgroundTint="#3AE413"
             app:srcCompat="@drawable/baseline_send_24" />
     </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChatList"
+        android:layout_width="410dp"
+        android:layout_height="595dp"
+        android:layout_above="@id/layoutChat"
+        android:layout_marginBottom="32dp"
+        tools:itemCount="6"
+        tools:listitem="@layout/item_chat_sender" />
 </RelativeLayout>

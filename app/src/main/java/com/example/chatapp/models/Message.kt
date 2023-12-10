@@ -5,6 +5,7 @@ package com.example.chatapp.models
      val receiver: String,
      val text: String,
      val timestamp:Long,
-     val isReceived: Boolean = true
+     var isReceived: Boolean = true
  ) {
-}
+constructor():this("","","",0)
+ }
