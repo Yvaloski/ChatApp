@@ -12,6 +12,8 @@ import com.example.chatapp.R
 import com.example.chatapp.adapters.FriendsRecyclerAdapter
 import com.example.chatapp.models.Friend
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class HomeActivity : AppCompatActivity() {
 
@@ -28,6 +30,10 @@ class HomeActivity : AppCompatActivity() {
         fabChat = findViewById(R.id.floatingActionButton)
 
         fabChat.setOnClickListener {
+
+            Intent(this, UserSearchActivity::class.java).also {
+                startActivity(it)
+            }
 
         }
         val friends = mutableListOf<Friend>(
@@ -55,16 +61,17 @@ class HomeActivity : AppCompatActivity() {
 
         if (item.itemId==R.id.itemSettings){
 
-            Toast.makeText(this,"Settings clicked", Toast.LENGTH_LONG).show()
-        /*    Intent(this, SettingsActivity::class.java).also {
-                startActivities(it)
-            }*/
+          Intent(this, SettingsActivity::class.java).also {
+                startActivity(it)
+            }
 
 
         }
 
         if (item.itemId==R.id.itemLogout){
 
+            val auth = Firebase.auth
+            auth.signOut()
             Intent(this, AuthentificationActivity::class.java).also {
                 startActivity(it)
              }

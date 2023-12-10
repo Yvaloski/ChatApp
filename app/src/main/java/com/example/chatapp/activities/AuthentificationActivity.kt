@@ -8,8 +8,13 @@ import android.widget.TextView
 import com.example.chatapp.R
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 class AuthentificationActivity : AppCompatActivity() {
+
+    private lateinit var auth:FirebaseAuth
     lateinit var tv_Register: TextView
     lateinit var textInputLayoutEmail: TextInputLayout
     lateinit var textInputLayoutPassword: TextInputLayout
@@ -19,10 +24,17 @@ class AuthentificationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentification)
 
+        auth=Firebase.auth
+
         tv_Register = findViewById(R.id.tv_register)
         textInputLayoutEmail = findViewById(R.id.textInputLayoutEmail)
         textInputLayoutPassword = findViewById(R.id.textInputLayoutPassword)
         btn_connect=findViewById(R.id.btn_connect)
+
+    }
+
+    override fun onStart() {
+        super.onStart()
 
 
         tv_Register.setOnClickListener{ Intent(this,RegisterActivity::class.java).also {
@@ -46,9 +58,9 @@ class AuthentificationActivity : AppCompatActivity() {
                     textInputLayoutPassword.error ="Password required"
                     textInputLayoutPassword.isErrorEnabled=true
                 }
-                } else {
-                    signIn(email,password)
-                }
+            } else {
+                signIn(email,password)
+            }
 
         }
     }
@@ -57,18 +69,21 @@ class AuthentificationActivity : AppCompatActivity() {
 
         Log.d("signIn","Sign in user")
 
-        if (email == "lolo@gmail.com" && password=="123") {
-
+        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener{
+            task-> if (task.isSuccessful){
             Intent(this, HomeActivity::class.java).also {
                 startActivity(it)
             }
             finish()
-        }else{
+            }else{
 
             textInputLayoutEmail.error="Authentification failed"
             textInputLayoutPassword.error="Authentification failed"
             textInputLayoutEmail.isErrorEnabled=true
             textInputLayoutPassword.isErrorEnabled=true
         }
+
+        }
+
     }
 }

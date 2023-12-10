@@ -6,15 +6,29 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.example.chatapp.R
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
+
+
+
         Handler(Looper.getMainLooper()).postDelayed({
 
-            Intent(this,HomeActivity::class.java).also {
+            val auth = Firebase.auth
+            val currentUser = auth.currentUser
+            if (currentUser != null){
+
+                Intent(this,HomeActivity::class.java).also {
+                    startActivity(it)
+                }
+            }
+
+            Intent(this,AuthentificationActivity::class.java).also {
                 startActivity(it)
             }
             finish()
