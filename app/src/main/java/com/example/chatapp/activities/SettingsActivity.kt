@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import com.bumptech.glide.Glide
 import com.example.chatapp.R
 import com.example.chatapp.models.User
 import com.google.android.material.button.MaterialButton
@@ -89,6 +90,11 @@ class SettingsActivity : AppCompatActivity() {
         layoutTextInputPseudo.editText?.setText(user.pseudo)
         layoutTextInputEmail.editText?.setText(user.email)
         // init image
+
+        user.image?.let {
+            Glide.with(this).load(it).placeholder(R.drawable.baseline_bug_report_24).into(ivUser)
+        }
+
 
         btnSave.setOnClickListener {
             layoutTextInputPseudo.isErrorEnabled=false

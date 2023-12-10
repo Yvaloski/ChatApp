@@ -22,7 +22,8 @@
             android:layout_height="50dp"
             android:layout_centerVertical="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/baseline_bug_report_24" />
+            android:src="@drawable/baseline_bug_report_24"
+            app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50percent"/>
 
         <TextView
             android:id="@+id/tvName"

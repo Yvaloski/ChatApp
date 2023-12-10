@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.R
 import com.example.chatapp.adapters.ChatRecyclerAdapter
+import com.example.chatapp.models.Friend
 import com.example.chatapp.models.Message
 import com.example.chatapp.models.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -113,9 +114,26 @@ class ChatActivity : AppCompatActivity() {
 
                         Log.e("ChatActivity", "error adding messages")
                     }
+                val friend = Friend(
+                    "",
+                    user.pseudo,
+                    message.text,
+                    timestamp = System.currentTimeMillis(),
+                    image = user.image ?: ""
+                )
+                db.collection("users")
+                    .document(currentUser!!.uid)
+                    .collection("friends")
+                    .document(user.uuid)
+                    .set(friend)
+                    .addOnSuccessListener {
+                        Log.d("ChatActivity", "friend added ")
+
+                    }.addOnFailureListener {
+                        Log.e("ChatActivity", "error adding user ")
+                    }
             }
         }
-
 
 
         val sentQuery =
@@ -130,50 +148,50 @@ class ChatActivity : AppCompatActivity() {
                 .whereEqualTo("receiver", currentUser!!.uid)
                 .orderBy("timestamp", Query.Direction.ASCENDING)
 
-        sentQuery.addSnapshotListener{
-            snapshot, exeption ->
-            if (exeption!=null){
-                Log.e("ChatActivity","error gettin messages",exeption)
+        sentQuery.addSnapshotListener { snapshot, exeption ->
+            if (exeption != null) {
+                Log.e("ChatActivity", "error gettin messages", exeption)
                 return@addSnapshotListener
             }
-            for (document in snapshot!!.documents){
+            for (document in snapshot!!.documents) {
                 var message = document.toObject(Message::class.java)
                 message?.let {
                     message.isReceived = false
-                    if (!messages.contains(message)){
+                    if (!messages.contains(message)) {
                         messages.add(message)
                     }
                 }
 
             }
-            if (messages.isNotEmpty()){
-                chatRecyclerAdapter.items = messages.sortedBy { it.timestamp } as MutableList<Message>
-                rvChatList.scrollToPosition(messages.size-1)
+            if (messages.isNotEmpty()) {
+                chatRecyclerAdapter.items =
+                    messages.sortedBy { it.timestamp } as MutableList<Message>
+                rvChatList.scrollToPosition(messages.size - 1)
 
             }
 
 
         }
 
-        receivedQuery.addSnapshotListener{
-                snapshot, exeption ->
-            if (exeption!=null){
-                Log.e("ChatActivity","error gettin messages",exeption)
+        receivedQuery.addSnapshotListener { snapshot, exeption ->
+            if (exeption != null) {
+                Log.e("ChatActivity", "error gettin messages", exeption)
                 return@addSnapshotListener
             }
-            for (document in snapshot!!.documents){
+            for (document in snapshot!!.documents) {
                 var message = document.toObject(Message::class.java)
                 message?.let {
                     message.isReceived = true
-                    if (!messages.contains(message)){
+                    if (!messages.contains(message)) {
                         messages.add(message)
                     }
                 }
 
             }
-            if (messages.isNotEmpty()){
-                chatRecyclerAdapter.items = messages.sortedBy { it.timestamp } as MutableList<Message>
-                rvChatList.scrollToPosition(messages.size-1)
+            if (messages.isNotEmpty()) {
+                chatRecyclerAdapter.items =
+                    messages.sortedBy { it.timestamp } as MutableList<Message>
+                rvChatList.scrollToPosition(messages.size - 1)
             }
 
 

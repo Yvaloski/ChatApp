@@ -3,6 +3,7 @@ package com.example.chatapp.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -12,11 +13,18 @@ import com.example.chatapp.R
 import com.example.chatapp.adapters.FriendsRecyclerAdapter
 import com.example.chatapp.models.Friend
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class HomeActivity : AppCompatActivity() {
 
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+    private lateinit var currentUser: FirebaseUser
 
     lateinit var rvFriends: RecyclerView
     lateinit var fabChat: FloatingActionButton
@@ -25,6 +33,9 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        auth = Firebase.auth
+        db = Firebase.firestore
+        currentUser=auth.currentUser!!
 
         rvFriends = findViewById(R.id.rvFriends)
         fabChat = findViewById(R.id.floatingActionButton)
@@ -36,19 +47,41 @@ class HomeActivity : AppCompatActivity() {
             }
 
         }
-        val friends = mutableListOf<Friend>(
 
-            Friend("Tony","WEWE ma caille"," ",420),
-            Friend("Pedro salini","Salut ma caille"," ",420),
-            Friend("Octo Hocho","Salut ma caille"," ",420)
+    }
 
-        )
+    override fun onResume() {
+        super.onResume()
+        val friends = mutableListOf<Friend>()
 
         friendsRecyclerAdapter = FriendsRecyclerAdapter()
-        friendsRecyclerAdapter.items = friends
         rvFriends.apply { layoutManager = LinearLayoutManager(this@HomeActivity)
             rvFriends.adapter = friendsRecyclerAdapter
         }
+
+        //recupération des derniers messages
+
+
+        db.collection("users")
+            .document(currentUser.uid)
+            .collection("friends").get()
+            .addOnSuccessListener {result->
+
+                for(document in result){
+                    val friend = document.toObject(Friend::class.java)
+                    friend.uuid=document.id
+                    friends.add(friend)
+                }
+
+                friendsRecyclerAdapter.items = friends
+
+            }.addOnFailureListener{
+
+                Log.e("HomeActivity","error reading list friends",it)
+            }
+
+
+
     }
 
 

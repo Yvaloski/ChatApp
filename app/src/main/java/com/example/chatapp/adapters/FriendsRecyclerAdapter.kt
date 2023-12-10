@@ -58,7 +58,7 @@ class FriendsRecyclerAdapter : RecyclerView.Adapter<FriendsRecyclerAdapter.ViewH
 
                 Intent(itemView.context, ChatActivity::class.java).also {
 
-                    it.putExtra("friend", friend.name)
+                    it.putExtra("friend", friend.uuid)
                     itemView.context.startActivity(it)
                 }
             }
