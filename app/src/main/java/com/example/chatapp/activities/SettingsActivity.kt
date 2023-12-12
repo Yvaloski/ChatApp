@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
+import com.bumptech.glide.GlideBuilder
 import com.example.chatapp.R
 import com.example.chatapp.models.User
 import com.google.android.material.button.MaterialButton
@@ -53,7 +54,7 @@ class SettingsActivity : AppCompatActivity() {
         val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
 
             it?.let {
-                ivUser.setImageURI(it)
+                Glide.with(this).load(it).placeholder(R.drawable.baseline_bug_report_24).into(ivUser)
                 isImageChanged = true
             }
 

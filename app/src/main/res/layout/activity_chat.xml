@@ -8,13 +8,16 @@
     tools:context=".activities.ChatActivity">
 
 
-
     <RelativeLayout
         android:id="@+id/layoutChat"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="5dp">
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp">
 
         <EditText
             android:id="@+id/editMessage"
@@ -24,12 +27,14 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
+            android:layout_toStartOf="@id/fabSendMessage"
             android:background="@drawable/bg_edit_message"
             android:ems="10"
-            android:layout_toStartOf="@id/fabSendMessage"
             android:hint="Message"
             android:inputType="text"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:textColor="@color/grenn"
+            android:textColorHint="@color/grenn" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabSendMessage"
@@ -37,6 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:layout_marginHorizontal="5dp"
             android:clickable="true"
 
             app:backgroundTint="#3AE413"

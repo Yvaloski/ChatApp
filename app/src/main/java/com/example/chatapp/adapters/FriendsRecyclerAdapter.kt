@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.chatapp.R
 import com.example.chatapp.activities.ChatActivity
 import com.example.chatapp.models.Friend
@@ -49,11 +50,12 @@ class FriendsRecyclerAdapter : RecyclerView.Adapter<FriendsRecyclerAdapter.ViewH
 
 
         fun bind(friend: Friend) {
+
             tvName.text = friend.name
             tvLastMsg.text = friend.lastMsg
             val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
             tvHour.text = sdf.format(Date(friend.timestamp))
-
+            Glide.with(itemView.context).load(friend.image).placeholder(R.drawable.baseline_bug_report_24).into(ivFriend)
             itemView.setOnClickListener {
 
                 Intent(itemView.context, ChatActivity::class.java).also {
